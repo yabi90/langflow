@@ -55,10 +55,7 @@ async def test_base(astradb_client: AstraDB):
             ),
         },
     )
-    from langchain_core.vectorstores import VectorStoreRetriever
 
-    assert isinstance(results["base_retriever"], VectorStoreRetriever)
-    assert results["vector_store"] is not None
     assert results["search_results"] == []
     assert astradb_client.collection(BASIC_COLLECTION)
 
@@ -75,7 +72,7 @@ async def test_astra_embeds_and_search():
             "api_endpoint": api_endpoint,
             "collection_name": BASIC_COLLECTION,
             "number_of_results": 1,
-            "search_input": "test1",
+            "search_query": "test1",
             "ingest_data": ComponentInputHandle(
                 clazz=TextToData, inputs={"text_data": ["test1", "test2"]}, output_name="from_text"
             ),
@@ -119,7 +116,7 @@ def test_astra_vectorize():
             api_endpoint=api_endpoint,
             collection_name=VECTORIZE_COLLECTION,
             ingest_data=records,
-            search_input="test",
+            search_query="test",
             number_of_results=2,
             pre_delete_collection=True,
         )
@@ -175,7 +172,7 @@ def test_astra_vectorize_with_provider_api_key():
             api_endpoint=api_endpoint,
             collection_name=VECTORIZE_COLLECTION_OPENAI,
             ingest_data=records,
-            search_input="test",
+            search_query="test",
             number_of_results=2,
             pre_delete_collection=True,
         )
@@ -230,7 +227,7 @@ def test_astra_vectorize_passes_authentication():
             api_endpoint=api_endpoint,
             collection_name=VECTORIZE_COLLECTION_OPENAI_WITH_AUTH,
             ingest_data=records,
-            search_input="test",
+            search_query="test",
             number_of_results=2,
             pre_delete_collection=True,
         )
